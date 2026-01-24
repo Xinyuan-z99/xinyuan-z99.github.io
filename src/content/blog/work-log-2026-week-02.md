@@ -1,5 +1,5 @@
 ---
-title: "Work Log · 2026 Week 02"
+title: Work Log · 2026 Week 02
 pubDate: "2026-01-24"
 description: "2026 年第2週目週報"
 category: "Work Log"
