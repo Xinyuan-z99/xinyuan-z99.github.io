@@ -13,8 +13,12 @@ import HeaderLink from './HeaderLink.astro';
       <HeaderLink href="/about">About</HeaderLink>
     </div>
 
-    <!-- 右上角跳动的小星星 -->
-    <div class="pulse-star" aria-hidden="true">✦</div>
+    <!-- 右上角金色星群 -->
+    <div class="star-cluster" aria-hidden="true">
+      <span class="star star-1">✦</span>
+      <span class="star star-2">✦</span>
+      <span class="star star-3">✦</span>
+    </div>
   </nav>
 </header>
 
@@ -61,7 +65,6 @@ import HeaderLink from './HeaderLink.astro';
   .internal-links::-webkit-scrollbar {
     display: none;
   }
-
   .internal-links {
     scrollbar-width: none;
   }
@@ -79,36 +82,50 @@ import HeaderLink from './HeaderLink.astro';
     border-bottom-color: var(--accent);
   }
 
-  /* ✦ 小星星动画 */
-  .pulse-star {
+  /* 🌟 星群容器 */
+  .star-cluster {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     margin-left: 8px;
-    font-size: 14px;
-    color: var(--accent);
-    opacity: 0.8;
     flex-shrink: 0;
-
-    animation: star-pulse 2.4s ease-in-out infinite;
   }
+
+  /* 🌟 单颗星星 */
+  .star {
+    font-size: 13px;
+    color: #d4af37; /* 金色基调 */
+    opacity: 0.7;
+    animation: star-pulse 2.8s ease-in-out infinite;
+  }
+
+  /* 错峰动画（关键） */
+  .star-1 { animation-delay: 0s; }
+  .star-2 { animation-delay: 0.6s; opacity: 0.55; }
+  .star-3 { animation-delay: 1.2s; opacity: 0.4; }
 
   @keyframes star-pulse {
     0% {
       transform: scale(1);
-      opacity: 0.5;
+      opacity: 0.4;
     }
     50% {
-      transform: scale(1.35);
-      opacity: 1;
+      transform: scale(1.4);
+      opacity: 0.95;
     }
     100% {
       transform: scale(1);
-      opacity: 0.5;
+      opacity: 0.4;
     }
   }
 
-  /* 手机端：稍微小一点，更克制 */
+  /* 📱 手机端更克制 */
   @media (max-width: 720px) {
-    .pulse-star {
-      font-size: 12px;
+    .star {
+      font-size: 11px;
+    }
+    .star-cluster {
+      gap: 3px;
     }
   }
 </style>
