@@ -1,5 +1,5 @@
 ---
-title: Work Log · 2026 Week 03
+title: Work Log · 2026 Week 04
 pubDate: "2026-02-06"
 description: "2026 年第4週目週報"
 category: "Work Log"
