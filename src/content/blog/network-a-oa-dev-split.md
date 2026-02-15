@@ -1,5 +1,5 @@
 ---
-title: network-a-oa-dev-split.md
+title: network-a-oa-dev-split
 pubDate: "2026-02-15"
 description: "FW・VRF構成によるネットワーク分離構築の振り返り"
 category: "Work Log"
