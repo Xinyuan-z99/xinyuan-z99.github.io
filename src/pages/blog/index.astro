@@ -10,15 +10,17 @@ const posts = (
   await getCollection('blog', ({ data }) => data.draft !== true)
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-// ✅ 按 category 分组
 const groupedPosts = posts.reduce((acc, post) => {
-  if (!acc[category]) acc[category] = [];
-  acc[category].push(post);
+  const cat = post.data.category;
+  if (!cat) return acc;
+
+  if (!acc[cat]) acc[cat] = [];
+  acc[cat].push(post);
   return acc;
 }, {});
 
-// ✅ 可选：固定分类显示顺序（没有列出来的分类会排在最后）
-const CATEGORY_ORDER = ['Network', 'Work Log', 'Life',];
+const CATEGORY_ORDER = ['Network', 'Work Log', 'Life'];
+
 const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
   const ia = CATEGORY_ORDER.indexOf(a);
   const ib = CATEGORY_ORDER.indexOf(b);
@@ -33,7 +35,6 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
-      /* Blog 页背景：更淡的紫色渐变 */
       body {
         margin: 0;
         min-height: 100vh;
@@ -60,7 +61,6 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         color: rgb(var(--gray));
       }
 
-      /* ✅ 分类块样式 */
       .category-block {
         margin-top: 2.5rem;
       }
@@ -139,12 +139,12 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
 
       <section>
         {
-          sortedCategories.map((category) => (
+          sortedCategories.map((cat) => (
             <div class="category-block">
-              <h2 class="category-title">📂 {category}</h2>
+              <h2 class="category-title">📂 {cat}</h2>
               <ul>
                 {
-                  groupedPosts[category].map((post) => (
+                  groupedPosts[cat].map((post) => (
                     <li>
                       <a href={`/blog/${post.id}/`}>
                         <h4 class="title">{post.data.title}</h4>
