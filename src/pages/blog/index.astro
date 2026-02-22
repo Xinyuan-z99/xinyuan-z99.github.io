@@ -12,14 +12,13 @@ const posts = (
 
 // ✅ 按 category 分组
 const groupedPosts = posts.reduce((acc, post) => {
-  const category = post.data.category ?? 'Other';
   if (!acc[category]) acc[category] = [];
   acc[category].push(post);
   return acc;
 }, {});
 
 // ✅ 可选：固定分类显示顺序（没有列出来的分类会排在最后）
-const CATEGORY_ORDER = ['Network', 'Work Log', 'Life', 'Other'];
+const CATEGORY_ORDER = ['Network', 'Work Log', 'Life',];
 const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
   const ia = CATEGORY_ORDER.indexOf(a);
   const ib = CATEGORY_ORDER.indexOf(b);
