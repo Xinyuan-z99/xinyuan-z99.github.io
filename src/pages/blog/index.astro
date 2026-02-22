@@ -9,6 +9,24 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 const posts = (
   await getCollection('blog', ({ data }) => data.draft !== true)
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// ✅ 按 category 分组
+const groupedPosts = posts.reduce((acc, post) => {
+  const category = post.data.category ?? 'Other';
+  if (!acc[category]) acc[category] = [];
+  acc[category].push(post);
+  return acc;
+}, {});
+
+// ✅ 可选：固定分类显示顺序（没有列出来的分类会排在最后）
+const CATEGORY_ORDER = ['Network', 'Work Log', 'Life', 'Other'];
+const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
+  const ia = CATEGORY_ORDER.indexOf(a);
+  const ib = CATEGORY_ORDER.indexOf(b);
+  const ra = ia === -1 ? 999 : ia;
+  const rb = ib === -1 ? 999 : ib;
+  return ra - rb || a.localeCompare(b);
+});
 ---
 
 <!doctype html>
@@ -22,12 +40,7 @@ const posts = (
         min-height: 100vh;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
           sans-serif;
-        background: linear-gradient(
-  180deg,
-  #fbfaff 0%,
-  #fdfcff 55%,
-  #ffffff 100%
-        );
+        background: linear-gradient(180deg, #fbfaff 0%, #fdfcff 55%, #ffffff 100%);
         background-attachment: fixed;
       }
 
@@ -46,6 +59,17 @@ const posts = (
       .page-subtitle {
         margin: 0 0 2rem;
         color: rgb(var(--gray));
+      }
+
+      /* ✅ 分类块样式 */
+      .category-block {
+        margin-top: 2.5rem;
+      }
+
+      .category-title {
+        margin: 0 0 1rem;
+        font-size: 1.4rem;
+        color: rgb(var(--black));
       }
 
       ul {
@@ -115,20 +139,27 @@ const posts = (
       </section>
 
       <section>
-        <ul>
-          {
-            posts.map((post) => (
-              <li>
-                <a href={`/blog/${post.id}/`}>
-                  <h4 class="title">{post.data.title}</h4>
-                  <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
+        {
+          sortedCategories.map((category) => (
+            <div class="category-block">
+              <h2 class="category-title">📂 {category}</h2>
+              <ul>
+                {
+                  groupedPosts[category].map((post) => (
+                    <li>
+                      <a href={`/blog/${post.id}/`}>
+                        <h4 class="title">{post.data.title}</h4>
+                        <p class="date">
+                          <FormattedDate date={post.data.pubDate} />
+                        </p>
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          ))
+        }
       </section>
     </main>
     <Footer />
