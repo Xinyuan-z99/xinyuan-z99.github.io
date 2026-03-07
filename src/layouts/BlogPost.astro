@@ -15,7 +15,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   <head>
     <BaseHead title={title} description={description} />
 
-    <style>
+    <style is:global>
       main {
         width: calc(100% - 2em);
         max-width: 100%;
@@ -65,8 +65,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         font-size: 0.85rem;
       }
 
-      /* ===== 二级标题 ===== */
-      .prose :where(h2) {
+      /* 二级标题 */
+      .prose h2 {
         font-size: 1.1rem;
         font-weight: 600;
         margin-top: 2rem;
@@ -74,8 +74,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         color: #111827;
       }
 
-      /* ===== Work Log 小标题 (###) ===== */
-      .prose :where(h3) {
+      /* Work Log 的 ### 标题 */
+      .prose h3 {
         font-size: 1.4rem;
         font-weight: 700;
         color: #5aa2e6;
@@ -86,7 +86,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         line-height: 1.3;
       }
 
-      /* 列表 */
       .prose ul {
         padding-left: 1.2rem;
         margin: 0.6rem 0 1.2rem;
@@ -96,9 +95,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         margin: 0.4rem 0;
       }
 
-      /* 手机端 */
       @media (max-width: 720px) {
-
         .prose {
           padding: 0.75em;
         }
@@ -107,36 +104,31 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           font-size: 1.8rem;
         }
 
-        .prose :where(h2) {
+        .prose h2 {
           font-size: 1.05rem;
         }
 
-        .prose :where(h3) {
+        .prose h3 {
           font-size: 1.2rem;
           padding-left: 10px;
           margin-top: 1.6rem;
           margin-bottom: 0.7rem;
         }
-
       }
     </style>
   </head>
 
   <body>
-
     <Header />
 
     <main>
       <article>
-
         <div class="hero-image">
           {heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
         </div>
 
         <div class="prose">
-
           <div class="title">
-
             <div class="date">
               <FormattedDate date={pubDate} />
               {
@@ -149,19 +141,14 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
             </div>
 
             <h1>{title}</h1>
-
             <hr />
-
           </div>
 
           <slot />
-
         </div>
-
       </article>
     </main>
 
     <Footer />
-
   </body>
 </html>
