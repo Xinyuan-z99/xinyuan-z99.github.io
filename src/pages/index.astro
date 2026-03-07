@@ -25,11 +25,16 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         margin: 2.5rem auto 4rem;
       }
 
-      .hero-card {
+      .hero-card,
+      .about-card {
         background: rgba(255, 255, 255, 0.92);
         border-radius: 2rem;
         padding: 2.5rem 2.5rem 2.8rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      }
+
+      .about-card {
+        margin-top: 1.6rem;
       }
 
       .hero-title {
@@ -40,7 +45,15 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         letter-spacing: -0.02em;
       }
 
-      .hero-text {
+      .section-title {
+        margin: 0 0 1rem;
+        font-size: 1.6rem;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+
+      .hero-text,
+      .about-text {
         margin: 0;
         font-size: 1.15rem;
         line-height: 2;
@@ -48,12 +61,40 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         max-width: 920px;
       }
 
-      .hero-text + .hero-text {
+      .hero-text + .hero-text,
+      .about-text + .about-text {
         margin-top: 1.4rem;
       }
 
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.6rem;
+        margin-top: 1.4rem;
+      }
+
+      .about-item {
+        background: rgba(250, 244, 248, 0.72);
+        border-radius: 1.2rem;
+        padding: 1.2rem 1.2rem 1.1rem;
+      }
+
+      .about-item-title {
+        margin: 0 0 0.6rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: rgb(var(--black));
+      }
+
+      .about-item-text {
+        margin: 0;
+        font-size: 0.98rem;
+        line-height: 1.8;
+        color: rgb(var(--gray));
+      }
+
       .bottom-space {
-        height: 220px;
+        height: 180px;
       }
 
       @media (max-width: 900px) {
@@ -62,7 +103,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
           margin: 1.5rem auto 3rem;
         }
 
-        .hero-card {
+        .hero-card,
+        .about-card {
           padding: 1.6rem 1.4rem 1.8rem;
           border-radius: 1.5rem;
         }
@@ -72,13 +114,23 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
           line-height: 1.2;
         }
 
-        .hero-text {
+        .section-title {
+          font-size: 1.35rem;
+        }
+
+        .hero-text,
+        .about-text {
           font-size: 1rem;
           line-height: 1.9;
         }
 
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
         .bottom-space {
-          height: 120px;
+          height: 100px;
         }
       }
     </style>
@@ -106,6 +158,51 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
           Topics include networking, Japanese, work logs, and daily reflections —
           not as finished answers, but as things in progress.
         </p>
+      </section>
+
+      <section class="about-card">
+        <h2 class="section-title">🌷 About Me</h2>
+
+        <p class="about-text">
+          I’m a network engineer based in Japan, and this blog is where I collect
+          small traces of work, study, language, and everyday life.
+        </p>
+
+        <p class="about-text">
+          I like writing about things while they are still unfolding — not only
+          the results, but also the confusion, the progress, and the process of
+          understanding them.
+        </p>
+
+        <div class="about-grid">
+          <div class="about-item">
+            <h3 class="about-item-title">💼 Work</h3>
+            <p class="about-item-text">
+              Networking, troubleshooting, project notes, and weekly work logs.
+            </p>
+          </div>
+
+          <div class="about-item">
+            <h3 class="about-item-title">📚 Learning</h3>
+            <p class="about-item-text">
+              Japanese study, technical growth, and things I want to understand more deeply.
+            </p>
+          </div>
+
+          <div class="about-item">
+            <h3 class="about-item-title">✍️ Writing</h3>
+            <p class="about-item-text">
+              Personal reflections, small observations, and records of change over time.
+            </p>
+          </div>
+
+          <div class="about-item">
+            <h3 class="about-item-title">🌿 Life</h3>
+            <p class="about-item-text">
+              Living in Japan, ordinary moments, and the quiet parts of daily life.
+            </p>
+          </div>
+        </div>
       </section>
 
       <div class="bottom-space"></div>

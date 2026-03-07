@@ -61,6 +61,31 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         color: rgb(var(--gray));
       }
 
+      .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin: 0 0 2rem;
+      }
+
+      .filter-btn {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.82);
+        color: rgb(var(--gray-dark));
+        padding: 0.55rem 1rem;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: #eaf4ff;
+        color: #3e88d8;
+        border-color: rgba(90, 162, 230, 0.35);
+      }
+
       .category-block {
         border-top: 1px solid rgba(0, 0, 0, 0.12);
         padding-top: 1.2rem;
@@ -114,9 +139,22 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         color: rgb(var(--accent));
       }
 
+      .hidden-category {
+        display: none;
+      }
+
       @media (max-width: 720px) {
         main {
           margin: 2rem auto 3rem;
+        }
+
+        .filter-bar {
+          gap: 0.6rem;
+        }
+
+        .filter-btn {
+          font-size: 0.9rem;
+          padding: 0.5rem 0.85rem;
         }
 
         ul {
@@ -139,12 +177,19 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         <p class="page-subtitle">
           Notes and thoughts about networking, Japanese, and life in Japan.
         </p>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="Work Log">Work Log</button>
+          <button class="filter-btn" data-filter="Network">Network</button>
+          <button class="filter-btn" data-filter="Life">Life</button>
+        </div>
       </section>
 
       <section>
         {
           sortedCategories.map((cat) => (
-            <div class="category-block">
+            <div class="category-block" data-category={cat}>
               <h2 class="category-title">📂 {cat}</h2>
               <ul>
                 {
@@ -165,6 +210,30 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         }
       </section>
     </main>
+
     <Footer />
+
+    <script>
+      const buttons = document.querySelectorAll('.filter-btn');
+      const blocks = document.querySelectorAll('.category-block');
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter;
+
+          buttons.forEach((btn) => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          blocks.forEach((block) => {
+            const category = block.dataset.category;
+            if (filter === 'all' || category === filter) {
+              block.classList.remove('hidden-category');
+            } else {
+              block.classList.add('hidden-category');
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>

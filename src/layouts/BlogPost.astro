@@ -6,9 +6,22 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type BlogEntry = CollectionEntry<'blog'>;
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+interface Props extends BlogEntry['data'] {
+  prevPost?: BlogEntry | null;
+  nextPost?: BlogEntry | null;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  prevPost,
+  nextPost
+} = Astro.props;
 ---
 
 <html lang="en">
@@ -86,6 +99,49 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         margin: 0.4rem 0;
       }
 
+      .post-navigation {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgb(var(--gray-light));
+      }
+
+      .post-nav-card {
+        display: block;
+        padding: 1rem 1.2rem;
+        border: 1px solid rgb(var(--gray-light));
+        border-radius: 12px;
+        text-decoration: none;
+        color: rgb(var(--gray-dark));
+        background: rgba(255, 255, 255, 0.65);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .post-nav-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(var(--gray), 0.12);
+      }
+
+      .post-nav-label {
+        display: block;
+        font-size: 0.85rem;
+        color: rgb(var(--gray));
+        margin-bottom: 0.35rem;
+      }
+
+      .post-nav-title {
+        display: block;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .post-nav-next {
+        text-align: right;
+      }
+
       @media (max-width: 720px) {
         .prose {
           padding: 0.75em;
@@ -101,6 +157,14 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           padding-left: 10px;
           margin-top: 1.6rem;
           margin-bottom: 0.7rem;
+        }
+
+        .post-navigation {
+          grid-template-columns: 1fr;
+        }
+
+        .post-nav-next {
+          text-align: left;
         }
       }
     </style>
@@ -133,6 +197,24 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
           </div>
 
           <slot />
+
+          {(prevPost || nextPost) && (
+            <div class="post-navigation">
+              {prevPost ? (
+                <a class="post-nav-card post-nav-prev" href={`/blog/${prevPost.id}/`}>
+                  <span class="post-nav-label">← Previous</span>
+                  <span class="post-nav-title">{prevPost.data.title}</span>
+                </a>
+              ) : <div></div>}
+
+              {nextPost ? (
+                <a class="post-nav-card post-nav-next" href={`/blog/${nextPost.id}/`}>
+                  <span class="post-nav-label">Next →</span>
+                  <span class="post-nav-title">{nextPost.data.title}</span>
+                </a>
+              ) : <div></div>}
+            </div>
+          )}
         </div>
       </article>
     </main>
