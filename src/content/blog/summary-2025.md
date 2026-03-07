@@ -2,10 +2,12 @@
 title: "2025 Summary"
 pubDate: "2025-12-31"
 description: "此刻，我的这一年是这样的"
+category: "Life"
+tags: ["life", "summary"]
 draft: false
 ---
 
-## 🎉 2025 · 总结
+### 🎉 2025 · 总结
 
 在 2026 年的第二天写下 2025 年的总结，应该也不算太晚吧。
 

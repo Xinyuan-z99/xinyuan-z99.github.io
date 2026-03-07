@@ -1,10 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getCollection } from 'astro:content';
 
 const posts = (
   await getCollection('blog', ({ data }) => data.draft !== true)
@@ -62,7 +62,9 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
       }
 
       .category-block {
-        margin-top: 2.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        padding-top: 1.2rem;
+        margin-top: 1.2rem;
       }
 
       .category-title {
@@ -73,8 +75,8 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
 
       ul {
         display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
+        flex-direction: column;
+        gap: 1.2rem;
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -97,12 +99,14 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         margin: 0 0 0.25rem;
         color: rgb(var(--black));
         line-height: 1.2;
+        font-size: 1.15rem;
+        font-weight: 500;
       }
 
       .date {
         margin: 0;
         color: rgb(var(--gray));
-        font-size: 0.9rem;
+        font-size: 0.95rem;
       }
 
       ul li a:hover .title,
@@ -116,7 +120,7 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         }
 
         ul {
-          gap: 0.5rem;
+          gap: 1rem;
         }
 
         ul li {
