@@ -2,7 +2,7 @@
 title: Network-A-oa-dev-split
 pubDate: "2026-02-15"
 description: "FW・VRF構成によるネットワーク分離構築の振り返り"
-category: "Work Log"
+category: "Network"
 tags: ["work", "networking", "firewall", "vrf"]
 ---
 
