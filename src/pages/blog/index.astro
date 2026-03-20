@@ -2,7 +2,6 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { getCollection } from 'astro:content';
 
@@ -121,21 +120,14 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
       }
 
       .title {
-        margin: 0 0 0.25rem;
+        margin: 0;
         color: rgb(var(--black));
         line-height: 1.2;
         font-size: 1.15rem;
         font-weight: 500;
       }
 
-      .date {
-        margin: 0;
-        color: rgb(var(--gray));
-        font-size: 0.95rem;
-      }
-
-      ul li a:hover .title,
-      ul li a:hover .date {
+      ul li a:hover .title {
         color: rgb(var(--accent));
       }
 
@@ -197,9 +189,6 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
                     <li>
                       <a href={`/blog/${post.id}/`}>
                         <h4 class="title">{post.data.title}</h4>
-                        <p class="date">
-                          <FormattedDate date={post.data.pubDate} />
-                        </p>
                       </a>
                     </li>
                   ))
