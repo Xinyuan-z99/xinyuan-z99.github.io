@@ -1,110 +1,360 @@
 ---
-const navItems = [
-  { href: '/', label: 'home' },
-  { href: '/blog', label: 'blog' },
-  { href: '/about', label: 'about' },
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const moments = [
+  {
+    image: '/images/moments/birthday.jpg',
+    title: 'HAPPY BIRTHDAY',
+    date: '2026.03',
+    description: 'A New Chapter.',
+  },
+  {
+    image: '/images/moments/takao.jpg',
+    title: 'Takaozan',
+    date: '2026.01',
+    description: 'The top of the mountain',
+  },
+  {
+    image: '/images/moments/takaoo.jpg',
+    title: 'Facing the Light',
+    date: '2026.03',
+    description: 'A Moment to Pause',
+  },
 ];
 ---
 
-<header class="site-header">
-  <nav class="nav">
-    <div class="nav-left">
-      {navItems.map((item) => (
-        <a href={item.href} class="nav-link">{item.label}</a>
-      ))}
-    </div>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          sans-serif;
+        background: linear-gradient(180deg, #fff9fc 0%, #fdeff6 100%);
+        color: rgb(var(--black));
+      }
 
-    <div class="nav-right">
-      <span id="tokyo-time">2026年3月20日 19:45</span>
-    </div>
-  </nav>
-</header>
+      main {
+        width: 1100px;
+        max-width: calc(100% - 2rem);
+        margin: 2.5rem auto 4rem;
+      }
 
-<script>
-  function updateTokyoTime() {
-    const el = document.getElementById('tokyo-time');
-    if (!el) return;
+      .hero-card,
+      .about-card,
+      .moments-card {
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 2rem;
+        padding: 2.5rem 2.5rem 2.8rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      }
 
-    const now = new Date();
-    const parts = new Intl.DateTimeFormat('zh-CN', {
-      timeZone: 'Asia/Tokyo',
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    }).formatToParts(now);
+      .hero-card {
+        position: relative;
+      }
 
-    const year = parts.find((p) => p.type === 'year')?.value ?? '';
-    const month = parts.find((p) => p.type === 'month')?.value ?? '';
-    const day = parts.find((p) => p.type === 'day')?.value ?? '';
-    const hour = parts.find((p) => p.type === 'hour')?.value ?? '';
-    const minute = parts.find((p) => p.type === 'minute')?.value ?? '';
+      .about-card,
+      .moments-card {
+        margin-top: 1.6rem;
+      }
 
-    el.textContent = `${year}年${month}月${day}日 ${hour}:${minute}`;
-  }
+      .hero-corner {
+        position: absolute;
+        top: 1.8rem;
+        right: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.45rem;
+      }
 
-  updateTokyoTime();
-  setInterval(updateTokyoTime, 60000);
-</script>
+      .hero-stars {
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+        color: #e7a9c4;
+        user-select: none;
+      }
 
-<style>
-  .site-header {
-    width: 100%;
-    padding-top: 1.2rem;
-  }
+      .hero-title {
+        margin: 0 0 1.2rem;
+        font-size: 3.2rem;
+        line-height: 1.15;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        max-width: 760px;
+      }
 
-  .nav {
-    width: 1100px;
-    max-width: calc(100% - 2rem);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
+      .section-title {
+        margin: 0 0 1rem;
+        font-size: 1.6rem;
+        line-height: 1.2;
+        font-weight: 700;
+      }
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-    gap: 1.4rem;
-  }
+      .hero-text,
+      .about-text,
+      .moments-subtitle {
+        margin: 0;
+        font-size: 1.15rem;
+        line-height: 2;
+        color: rgb(var(--gray));
+        max-width: 920px;
+      }
 
-  .nav-link {
-    font-size: 1rem;
-    color: rgb(var(--gray));
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
+      .hero-text + .hero-text,
+      .about-text + .about-text {
+        margin-top: 1.4rem;
+      }
 
-  .nav-link:hover {
-    color: rgb(var(--black));
-  }
+      .moments-subtitle {
+        margin-bottom: 1.4rem;
+      }
 
-  .nav-right {
-    flex-shrink: 0;
-  }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.6rem;
+        margin-top: 1.4rem;
+      }
 
-  #tokyo-time {
-    font-size: 0.95rem;
-    color: rgb(var(--gray));
-    white-space: nowrap;
-  }
+      .about-item {
+        background: rgba(250, 244, 248, 0.72);
+        border-radius: 1.2rem;
+        padding: 1.2rem 1.2rem 1.1rem;
+      }
 
-  @media (max-width: 900px) {
-    .nav {
-      max-width: calc(100% - 1.25rem);
-      gap: 0.8rem;
-    }
+      .about-item-title {
+        margin: 0 0 0.6rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: rgb(var(--black));
+      }
 
-    .nav-left {
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+      .about-item-text {
+        margin: 0;
+        font-size: 0.98rem;
+        line-height: 1.8;
+        color: rgb(var(--gray));
+      }
 
-    #tokyo-time {
-      font-size: 0.88rem;
-    }
-  }
-</style>
+      .moments-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+
+      .moment-item {
+        overflow: hidden;
+        background: rgba(250, 244, 248, 0.72);
+        border-radius: 1.3rem;
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
+      }
+
+      .moment-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+      }
+
+      .moment-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .moment-content {
+        padding: 1rem 1rem 1.1rem;
+      }
+
+      .moment-date {
+        display: inline-block;
+        margin-bottom: 0.45rem;
+        font-size: 0.85rem;
+        color: rgb(var(--gray));
+      }
+
+      .moment-title {
+        margin: 0 0 0.45rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: rgb(var(--black));
+      }
+
+      .moment-text {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: rgb(var(--gray));
+      }
+
+      .bottom-space {
+        height: 180px;
+      }
+
+      @media (max-width: 900px) {
+        main {
+          max-width: calc(100% - 1.25rem);
+          margin: 1.5rem auto 3rem;
+        }
+
+        .hero-card,
+        .about-card,
+        .moments-card {
+          padding: 1.6rem 1.4rem 1.8rem;
+          border-radius: 1.5rem;
+        }
+
+        .hero-corner {
+          position: static;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+        }
+
+        .hero-title {
+          font-size: 2.2rem;
+          line-height: 1.2;
+          max-width: none;
+        }
+
+        .section-title {
+          font-size: 1.35rem;
+        }
+
+        .hero-text,
+        .about-text,
+        .moments-subtitle {
+          font-size: 1rem;
+          line-height: 1.9;
+        }
+
+        .about-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .moments-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .moment-image {
+          height: 200px;
+        }
+
+        .bottom-space {
+          height: 100px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <section class="hero-card">
+        <div class="hero-corner">
+          <div class="hero-stars">✦ ✧ ✦</div>
+        </div>
+
+        <h1 class="hero-title">👩‍💻 Hi, this is Xinyuan’s blog</h1>
+
+        <p class="hero-text">Hi, I’m Xinyuan.</p>
+
+        <p class="hero-text">
+          A small, quiet space for notes and observations.
+        </p>
+
+        <p class="hero-text">
+          Here I document what I’m working on, what I’m learning, and how things
+          slowly take shape over time.
+        </p>
+
+        <p class="hero-text">
+          Topics include networking, Japanese, work logs, and daily reflections —
+          not as finished answers, but as things in progress.
+        </p>
+      </section>
+
+      <section class="about-card">
+        <h2 class="section-title">About Me</h2>
+
+        <p class="about-text">
+          I’m a network engineer based in Japan, and this blog is where I collect
+          small traces of work, study, language, and everyday life.
+        </p>
+
+        <p class="about-text">
+          I like writing about things while they are still unfolding — not only
+          the results, but also the confusion, the progress, and the process of
+          understanding them.
+        </p>
+
+        <div class="about-grid">
+          <div class="about-item">
+            <h3 class="about-item-title">💼 Work</h3>
+            <p class="about-item-text">
+              Networking, troubleshooting, project notes, and weekly work logs.
+            </p>
+          </div>
+
+          <div class="about-item">
+            <h3 class="about-item-title">📚 Learning</h3>
+            <p class="about-item-text">
+              Japanese study, technical growth, and things I want to understand
+              more deeply.
+            </p>
+          </div>
+
+          <div class="about-item">
+            <h3 class="about-item-title">✍️ Writing</h3>
+            <p class="about-item-text">
+              Personal reflections, small observations, and records of change over time.
+            </p>
+          </div>
+
+          <div class="about-item">
+            <h3 class="about-item-title">🌿 Life</h3>
+            <p class="about-item-text">
+              Living in Japan, ordinary moments, and the quiet parts of daily life.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="moments-card">
+        <h2 class="section-title">📷 Recent Moments</h2>
+        <p class="moments-subtitle">
+          Small traces of what I’ve been doing, learning, and noticing recently.
+        </p>
+
+        <div class="moments-grid">
+          {moments.map((moment) => (
+            <article class="moment-item">
+              <img
+                class="moment-image"
+                src={moment.image}
+                alt={moment.title}
+              />
+              <div class="moment-content">
+                <span class="moment-date">{moment.date}</span>
+                <h3 class="moment-title">{moment.title}</h3>
+                <p class="moment-text">{moment.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <div class="bottom-space"></div>
+    </main>
+
+    <Footer />
+  </body>
+</html>
