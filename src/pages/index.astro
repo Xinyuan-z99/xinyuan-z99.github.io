@@ -9,21 +9,22 @@ const moments = [
     image: '/images/moments/birthday.jpg',
     title: 'HAPPY BIRTHDAY',
     date: '2026.03',
-    description: 'A New Chapter。',
+    description: 'A New Chapter.',
   },
   {
     image: '/images/moments/takao.jpg',
     title: 'Takaozan',
     date: '2026.01',
-    description: 'the top of the mountain',
+    description: 'The top of the mountain',
   },
   {
     image: '/images/moments/takaoo.jpg',
-    title: 'Facing The Light',
+    title: 'Facing the Light',
     date: '2026.03',
     description: 'A Moment to Pause',
   },
-];-
+];
+---
 
 <!doctype html>
 <html lang="zh-CN">
@@ -54,9 +55,40 @@ const moments = [
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
       }
 
+      .hero-card {
+        position: relative;
+      }
+
       .about-card,
       .moments-card {
         margin-top: 1.6rem;
+      }
+
+      .hero-corner {
+        position: absolute;
+        top: 1.8rem;
+        right: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.45rem;
+      }
+
+      .hero-stars {
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+        color: #e7a9c4;
+        user-select: none;
+      }
+
+      .tokyo-time {
+        font-size: 0.92rem;
+        line-height: 1.6;
+        color: rgb(var(--gray));
+        background: rgba(250, 244, 248, 0.9);
+        padding: 0.45rem 0.8rem;
+        border-radius: 999px;
+        white-space: nowrap;
       }
 
       .hero-title {
@@ -65,6 +97,7 @@ const moments = [
         line-height: 1.15;
         font-weight: 800;
         letter-spacing: -0.02em;
+        max-width: 760px;
       }
 
       .section-title {
@@ -187,9 +220,16 @@ const moments = [
           border-radius: 1.5rem;
         }
 
+        .hero-corner {
+          position: static;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+        }
+
         .hero-title {
           font-size: 2.2rem;
           line-height: 1.2;
+          max-width: none;
         }
 
         .section-title {
@@ -229,6 +269,11 @@ const moments = [
 
     <main>
       <section class="hero-card">
+        <div class="hero-corner">
+          <div class="hero-stars">✦ ✧ ✦</div>
+          <div class="tokyo-time" id="tokyo-time">东京时间：--</div>
+        </div>
+
         <h1 class="hero-title">👩‍💻 Hi, this is Xinyuan’s blog</h1>
 
         <p class="hero-text">Hi, I’m Xinyuan.</p>
@@ -249,7 +294,7 @@ const moments = [
       </section>
 
       <section class="about-card">
-        <h2 class="section-title">🌷 About Me</h2>
+        <h2 class="section-title">About Me</h2>
 
         <p class="about-text">
           I’m a network engineer based in Japan, and this blog is where I collect
@@ -322,5 +367,45 @@ const moments = [
     </main>
 
     <Footer />
+
+    <script>
+      function updateTokyoTime() {
+        const el = document.getElementById('tokyo-time');
+        if (!el) return;
+
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('zh-CN', {
+          timeZone: 'Asia/Tokyo',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        });
+
+        const formatted = formatter.format(now).replace(/\//g, '年').replace(',', '');
+        const parts = new Intl.DateTimeFormat('zh-CN', {
+          timeZone: 'Asia/Tokyo',
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }).formatToParts(now);
+
+        const year = parts.find((p) => p.type === 'year')?.value ?? '';
+        const month = parts.find((p) => p.type === 'month')?.value ?? '';
+        const day = parts.find((p) => p.type === 'day')?.value ?? '';
+        const hour = parts.find((p) => p.type === 'hour')?.value ?? '';
+        const minute = parts.find((p) => p.type === 'minute')?.value ?? '';
+
+        el.textContent = `东京时间：${year}年${month}月${day}日 ${hour}:${minute}`;
+      }
+
+      updateTokyoTime();
+      setInterval(updateTokyoTime, 60000);
+    </script>
   </body>
 </html>
