@@ -1,131 +1,63 @@
 ---
-import { SITE_TITLE } from '../consts';
-import HeaderLink from './HeaderLink.astro';
+const navItems = [
+  { href: '/', label: 'home' },
+  { href: '/blog', label: 'blog' },
+  { href: '/about', label: 'about' },
+];
 ---
 
-<header>
-  <nav>
-    <h2><a href="/">{SITE_TITLE}</a></h2>
-
-    <div class="internal-links" aria-label="Primary navigation">
-      <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
-      <HeaderLink href="/about">About</HeaderLink>
+<header class="site-header">
+  <nav class="nav">
+    <div class="nav-left">
+      {navItems.map((item) => (
+        <a href={item.href} class="nav-link">{item.label}</a>
+      ))}
     </div>
 
-    <!-- 右上角金色星群 -->
-    <div class="star-cluster" aria-hidden="true">
-      <span class="star star-1">✦</span>
-      <span class="star star-2">✦</span>
-      <span class="star star-3">✦</span>
+    <div class="nav-right">
+      <span id="tokyo-time">2026年3月20日 19:45</span>
     </div>
   </nav>
 </header>
 
+<script>
+  function updateTokyoTime() {
+    const el = document.getElementById('tokyo-time');
+    if (!el) return;
+
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat('zh-CN', {
+      timeZone: 'Asia/Tokyo',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(now);
+
+    const year = parts.find((p) => p.type === 'year')?.value ?? '';
+    const month = parts.find((p) => p.type === 'month')?.value ?? '';
+    const day = parts.find((p) => p.type === 'day')?.value ?? '';
+    const hour = parts.find((p) => p.type === 'hour')?.value ?? '';
+    const minute = parts.find((p) => p.type === 'minute')?.value ?? '';
+
+    el.textContent = `${year}年${month}月${day}日 ${hour}:${minute}`;
+  }
+
+  updateTokyoTime();
+  setInterval(updateTokyoTime, 60000);
+</script>
+
 <style>
-  header {
-    margin: 0;
-    padding: 0 1em;
-    background: white;
-    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+  .site-header {
+    width: 100%;
   }
 
-  h2 {
-    margin: 0;
-    font-size: 1em;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  h2 a,
-  h2 a.active {
-    text-decoration: none;
-  }
-
-  nav {
+  .nav {
+    width: 1100px;
+    max-width: calc(100% - 2rem);
+    margin: 0 auto;
+    padding: 1.2rem 0 0.8rem;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: nowrap;
-    min-width: 0;
-  }
-
-  .internal-links {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    min-width: 0;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .internal-links::-webkit-scrollbar {
-    display: none;
-  }
-  .internal-links {
-    scrollbar-width: none;
-  }
-
-  nav a {
-    padding: 1em 0.5em;
-    color: var(--black);
-    border-bottom: 4px solid transparent;
-    text-decoration: none;
-    white-space: nowrap;
-    flex: 0 0 auto;
-  }
-
-  nav a.active {
-    border-bottom-color: var(--accent);
-  }
-
-  /* 🌟 星群容器 */
-  .star-cluster {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: 8px;
-    flex-shrink: 0;
-  }
-
-  /* 🌟 单颗星星 */
-  .star {
-    font-size: 13px;
-    color: #d4af37; /* 金色基调 */
-    opacity: 0.7;
-    animation: star-pulse 2.8s ease-in-out infinite;
-  }
-
-  /* 错峰动画（关键） */
-  .star-1 { animation-delay: 0s; }
-  .star-2 { animation-delay: 0.6s; opacity: 0.55; }
-  .star-3 { animation-delay: 1.2s; opacity: 0.4; }
-
-  @keyframes star-pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.4;
-    }
-    50% {
-      transform: scale(1.4);
-      opacity: 0.95;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 0.4;
-    }
-  }
-
-  /* 📱 手机端更克制 */
-  @media (max-width: 720px) {
-    .star {
-      font-size: 11px;
-    }
-    .star-cluster {
-      gap: 3px;
-    }
-  }
-</style>
+    align-items
