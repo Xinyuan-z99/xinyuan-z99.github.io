@@ -3,7 +3,27 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
----
+
+const moments = [
+  {
+    image: '/images/moments/birthday.jpg',
+    title: 'HAPPY BIRTHDAY',
+    date: '2026.03',
+    description: 'A New Chapter。',
+  },
+  {
+    image: '/images/moments/takao.jpg',
+    title: 'Takaozan',
+    date: '2026.01',
+    description: 'the top of the mountain',
+  },
+  {
+    image: '/images/moments/takaoo.jpg',
+    title: 'Facing The Light',
+    date: '2026.03',
+    description: 'A Moment to Pause',
+  },
+];-
 
 <!doctype html>
 <html lang="zh-CN">
@@ -26,14 +46,16 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
       }
 
       .hero-card,
-      .about-card {
+      .about-card,
+      .moments-card {
         background: rgba(255, 255, 255, 0.92);
         border-radius: 2rem;
         padding: 2.5rem 2.5rem 2.8rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
       }
 
-      .about-card {
+      .about-card,
+      .moments-card {
         margin-top: 1.6rem;
       }
 
@@ -53,7 +75,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
       }
 
       .hero-text,
-      .about-text {
+      .about-text,
+      .moments-subtitle {
         margin: 0;
         font-size: 1.15rem;
         line-height: 2;
@@ -64,6 +87,10 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
       .hero-text + .hero-text,
       .about-text + .about-text {
         margin-top: 1.4rem;
+      }
+
+      .moments-subtitle {
+        margin-bottom: 1.4rem;
       }
 
       .about-grid {
@@ -93,6 +120,56 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         color: rgb(var(--gray));
       }
 
+      .moments-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+
+      .moment-item {
+        overflow: hidden;
+        background: rgba(250, 244, 248, 0.72);
+        border-radius: 1.3rem;
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
+      }
+
+      .moment-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+      }
+
+      .moment-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .moment-content {
+        padding: 1rem 1rem 1.1rem;
+      }
+
+      .moment-date {
+        display: inline-block;
+        margin-bottom: 0.45rem;
+        font-size: 0.85rem;
+        color: rgb(var(--gray));
+      }
+
+      .moment-title {
+        margin: 0 0 0.45rem;
+        font-size: 1rem;
+        font-weight: 700;
+        color: rgb(var(--black));
+      }
+
+      .moment-text {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: rgb(var(--gray));
+      }
+
       .bottom-space {
         height: 180px;
       }
@@ -104,7 +181,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         }
 
         .hero-card,
-        .about-card {
+        .about-card,
+        .moments-card {
           padding: 1.6rem 1.4rem 1.8rem;
           border-radius: 1.5rem;
         }
@@ -119,7 +197,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         }
 
         .hero-text,
-        .about-text {
+        .about-text,
+        .moments-subtitle {
           font-size: 1rem;
           line-height: 1.9;
         }
@@ -127,6 +206,15 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
         .about-grid {
           grid-template-columns: 1fr;
           gap: 1rem;
+        }
+
+        .moments-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .moment-image {
+          height: 200px;
         }
 
         .bottom-space {
@@ -185,7 +273,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
           <div class="about-item">
             <h3 class="about-item-title">📚 Learning</h3>
             <p class="about-item-text">
-              Japanese study, technical growth, and things I want to understand more deeply.
+              Japanese study, technical growth, and things I want to understand
+              more deeply.
             </p>
           </div>
 
@@ -202,6 +291,30 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
               Living in Japan, ordinary moments, and the quiet parts of daily life.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section class="moments-card">
+        <h2 class="section-title">📷 Recent Moments</h2>
+        <p class="moments-subtitle">
+          Small traces of what I’ve been doing, learning, and noticing recently.
+        </p>
+
+        <div class="moments-grid">
+          {moments.map((moment) => (
+            <article class="moment-item">
+              <img
+                class="moment-image"
+                src={moment.image}
+                alt={moment.title}
+              />
+              <div class="moment-content">
+                <span class="moment-date">{moment.date}</span>
+                <h3 class="moment-title">{moment.title}</h3>
+                <p class="moment-text">{moment.description}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
