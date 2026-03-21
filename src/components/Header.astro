@@ -3,53 +3,131 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
-  <nav class="nav">
-    <a href="/" class={currentPath === '/' ? 'active' : ''}>HOME</a>
-    <a href="/blog" class={currentPath.startsWith('/blog') ? 'active' : ''}>BLOG</a>
-    <a href="/about" class={currentPath.startsWith('/about') ? 'active' : ''}>ABOUT</a>
-  </nav>
+  <div class="header-inner">
+    <nav class="nav">
+      <a href="/" class={currentPath === '/' ? 'active' : ''}>HOME</a>
+      <a href="/blog" class={currentPath.startsWith('/blog') ? 'active' : ''}>BLOG</a>
+      <a href="/about" class={currentPath.startsWith('/about') ? 'active' : ''}>ABOUT</a>
+    </nav>
+
+    <div class="tokyo-time" id="tokyo-time">Tokyo Time · --</div>
+  </div>
 </header>
+
+<script>
+  function updateTokyoTime() {
+    const el = document.getElementById('tokyo-time');
+    if (!el) return;
+
+    const now = new Date();
+
+    const dateFormatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Tokyo',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      weekday: 'long',
+    });
+
+    const timeFormatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Tokyo',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+
+    const parts = dateFormatter.formatToParts(now);
+
+    const month = parts.find((p) => p.type === 'month')?.value ?? '';
+    const day = parts.find((p) => p.type === 'day')?.value ?? '';
+    const year = parts.find((p) => p.type === 'year')?.value ?? '';
+    const weekday = parts.find((p) => p.type === 'weekday')?.value ?? '';
+    const time = timeFormatter.format(now);
+
+    el.textContent = `${month} ${day}, ${year} · ${weekday} · ${time}`;
+  }
+
+  updateTokyoTime();
+  setInterval(updateTokyoTime, 60000);
+</script>
 
 <style>
   .site-header {
     width: 100%;
-    padding: 2rem 1rem 1rem;
+    padding: 2.2rem 1rem 1.2rem;
+  }
+
+  .header-inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   .nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2.4rem;
-    font-size: 1rem;
+    gap: 3rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
   }
 
   .nav a {
     color: rgb(var(--black));
     text-decoration: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
   }
 
   .nav a:hover {
-    opacity: 0.7;
+    opacity: 0.75;
     transform: translateY(-1px);
   }
 
   .nav a.active {
-    color: rgb(var(--accent));
+    color: #d49ab6;
   }
 
-  @media (max-width: 720px) {
+  .tokyo-time {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #b78ca4;
+    background: rgba(252, 243, 248, 0.95);
+    border: 1px solid rgba(231, 196, 214, 0.7);
+    padding: 0.56rem 0.95rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(220, 188, 205, 0.14);
+  }
+
+  @media (max-width: 900px) {
     .site-header {
-      padding: 1.4rem 1rem 0.8rem;
+      padding: 1.6rem 1rem 0.9rem;
+    }
+
+    .header-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
     }
 
     .nav {
-      gap: 1.2rem;
-      font-size: 0.9rem;
+      gap: 1.4rem;
+      font-size: 1.05rem;
       letter-spacing: 0.08em;
+    }
+
+    .tokyo-time {
+      position: static;
+      transform: none;
+      font-size: 0.86rem;
+      padding: 0.45rem 0.8rem;
     }
   }
 </style>
