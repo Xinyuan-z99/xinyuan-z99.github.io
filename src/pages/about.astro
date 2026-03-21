@@ -2,160 +2,123 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
-    <BaseHead title={`About | ${SITE_TITLE}`} description="About Xinyuan" />
+    <BaseHead title={`About | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        background: linear-gradient(180deg, #fff9fc 0%, #fdeff6 100%);
-        color: rgb(var(--black));
+      :root {
+        --bg1: #fff8fb;
+        --bg2: #fdeff5;
+        --card: rgba(255, 255, 255, 0.74);
+        --border: rgba(255, 182, 193, 0.28);
+        --text: #5b4b52;
+        --title: #9f6f7d;
+        --shadow: 0 10px 30px rgba(222, 170, 190, 0.16);
       }
 
-      main {
-        width: 960px;
-        max-width: calc(100% - 2rem);
-        margin: 2.5rem auto 4rem;
+      body {
+        margin: 0;
+        font-family: 'Times New Roman', serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 35%),
+          linear-gradient(135deg, var(--bg1), var(--bg2));
+      }
+
+      .page-shell {
+        min-height: 100vh;
+      }
+
+      .main {
+        width: min(900px, 92%);
+        margin: 0 auto;
+        padding: 2rem 0 4rem;
       }
 
       .about-card {
-        background: rgba(255, 255, 255, 0.92);
-        border-radius: 2rem;
-        padding: 2.5rem 2.5rem 2.8rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        margin-top: 1.5rem;
+        background: var(--card);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        padding: 3rem 2rem;
       }
 
       .page-title {
-        margin: 0 0 1.2rem;
-        font-size: 2.4rem;
-        line-height: 1.15;
-        font-weight: 800;
-        letter-spacing: -0.02em;
+        text-align: center;
+        margin: 0 0 2rem 0;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        letter-spacing: 0.18em;
+        color: var(--title);
+        font-weight: 600;
       }
 
-      .about-text {
-        margin: 0;
-        font-size: 1.1rem;
-        line-height: 2;
-        color: rgb(var(--gray));
+      .about-content {
+        max-width: 720px;
+        margin: 0 auto;
+        font-size: 1.04rem;
+        line-height: 2.05;
       }
 
-      .about-text + .about-text {
-        margin-top: 1.3rem;
+      .about-content p {
+        margin: 0 0 1.2rem 0;
       }
 
-      .info-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.2rem;
-        margin-top: 2rem;
-      }
-
-      .info-item {
-        background: rgba(250, 244, 248, 0.72);
-        border-radius: 1.2rem;
-        padding: 1.2rem;
-      }
-
-      .info-title {
-        margin: 0 0 0.5rem;
-        font-size: 1rem;
-        font-weight: 700;
-        color: rgb(var(--black));
-      }
-
-      .info-text {
-        margin: 0;
-        font-size: 0.96rem;
-        line-height: 1.8;
-        color: rgb(var(--gray));
-      }
-
-      @media (max-width: 900px) {
-        main {
-          max-width: calc(100% - 1.25rem);
-          margin: 1.5rem auto 3rem;
-        }
-
+      @media (max-width: 768px) {
         .about-card {
-          padding: 1.6rem 1.4rem 1.8rem;
-          border-radius: 1.5rem;
-        }
-
-        .page-title {
-          font-size: 2rem;
-        }
-
-        .about-text {
-          font-size: 1rem;
-          line-height: 1.9;
-        }
-
-        .info-grid {
-          grid-template-columns: 1fr;
-          gap: 1rem;
+          padding: 2rem 1.3rem;
         }
       }
     </style>
   </head>
 
   <body>
-    <Header />
+    <div class="page-shell">
+      <Header />
+      <main class="main">
+        <section class="about-card">
+          <h1 class="page-title">ABOUT</h1>
+          <div class="about-content">
+            <p>Hi, I’m Xinyuan.</p>
 
-    <main>
-      <section class="about-card">
-        <h1 class="page-title">About Me</h1>
-
-        <p class="about-text">Hi, I’m Xinyuan.</p>
-
-        <p class="about-text">
-          I’m a network engineer based in Japan, and this blog is a small space
-          where I write about work, study, language, and everyday life.
-        </p>
-
-        <p class="about-text">
-          I like documenting things while they are still unfolding — not only the
-          results, but also the process, the confusion, and the small progress
-          along the way.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-item">
-            <h2 class="info-title">💼 Work</h2>
-            <p class="info-text">
-              Notes on networking, troubleshooting, project tasks, and weekly work logs.
+            <p>
+              I’m currently living in Tokyo and working in network engineering in Japan.
+              My daily life is closely connected to technology, problem-solving,
+              learning, and continuous improvement.
             </p>
-          </div>
 
-          <div class="info-item">
-            <h2 class="info-title">📚 Learning</h2>
-            <p class="info-text">
-              Japanese study, technical learning, and things I want to understand more deeply.
+            <p>
+              I created this website as a personal space to document my journey —
+              not only in work and study, but also in life itself.
+              Here, I share technical notes, work logs, reflections, and small
+              everyday moments that I want to remember.
             </p>
-          </div>
 
-          <div class="info-item">
-            <h2 class="info-title">✍️ Writing</h2>
-            <p class="info-text">
-              Personal reflections, daily notes, and thoughts captured in progress.
+            <p>
+              For me, writing is a way to organize thoughts, preserve feelings,
+              and look back on growth.
+              Sometimes this site is a notebook for learning.
+              Sometimes it is a quiet corner for recording life.
+              Sometimes it is simply a place to leave traces of who I am at this moment.
             </p>
-          </div>
 
-          <div class="info-item">
-            <h2 class="info-title">🌿 Life</h2>
-            <p class="info-text">
-              Small observations from living in Japan and the quiet details of everyday life.
+            <p>
+              Beyond work, I also enjoy observing daily life, taking photos,
+              writing personal reflections, and collecting meaningful memories.
+              I hope this website can become a gentle archive of my time,
+              growth, and experiences.
             </p>
-          </div>
-        </div>
-      </section>
-    </main>
 
-    <Footer />
+            <p>Thank you for visiting.</p>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
