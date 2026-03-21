@@ -1,360 +1,55 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-
-const moments = [
-  {
-    image: '/images/moments/birthday.jpg',
-    title: 'HAPPY BIRTHDAY',
-    date: '2026.03',
-    description: 'A New Chapter.',
-  },
-  {
-    image: '/images/moments/takao.jpg',
-    title: 'Takaozan',
-    date: '2026.01',
-    description: 'The top of the mountain',
-  },
-  {
-    image: '/images/moments/takaoo.jpg',
-    title: 'Facing the Light',
-    date: '2026.03',
-    description: 'A Moment to Pause',
-  },
-];
+const currentPath = Astro.url.pathname;
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-          sans-serif;
-        background: linear-gradient(180deg, #fff9fc 0%, #fdeff6 100%);
-        color: rgb(var(--black));
-      }
+<header class="site-header">
+  <nav class="nav">
+    <a href="/" class={currentPath === '/' ? 'active' : ''}>HOME</a>
+    <a href="/blog" class={currentPath.startsWith('/blog') ? 'active' : ''}>BLOG</a>
+    <a href="/about" class={currentPath.startsWith('/about') ? 'active' : ''}>ABOUT</a>
+  </nav>
+</header>
 
-      main {
-        width: 1100px;
-        max-width: calc(100% - 2rem);
-        margin: 2.5rem auto 4rem;
-      }
+<style>
+  .site-header {
+    width: 100%;
+    padding: 2rem 1rem 1rem;
+  }
 
-      .hero-card,
-      .about-card,
-      .moments-card {
-        background: rgba(255, 255, 255, 0.92);
-        border-radius: 2rem;
-        padding: 2.5rem 2.5rem 2.8rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-      }
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
 
-      .hero-card {
-        position: relative;
-      }
+  .nav a {
+    color: rgb(var(--black));
+    text-decoration: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
 
-      .about-card,
-      .moments-card {
-        margin-top: 1.6rem;
-      }
+  .nav a:hover {
+    opacity: 0.7;
+    transform: translateY(-1px);
+  }
 
-      .hero-corner {
-        position: absolute;
-        top: 1.8rem;
-        right: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 0.45rem;
-      }
+  .nav a.active {
+    color: rgb(var(--accent));
+  }
 
-      .hero-stars {
-        font-size: 1.1rem;
-        letter-spacing: 0.18em;
-        color: #e7a9c4;
-        user-select: none;
-      }
+  @media (max-width: 720px) {
+    .site-header {
+      padding: 1.4rem 1rem 0.8rem;
+    }
 
-      .hero-title {
-        margin: 0 0 1.2rem;
-        font-size: 3.2rem;
-        line-height: 1.15;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        max-width: 760px;
-      }
-
-      .section-title {
-        margin: 0 0 1rem;
-        font-size: 1.6rem;
-        line-height: 1.2;
-        font-weight: 700;
-      }
-
-      .hero-text,
-      .about-text,
-      .moments-subtitle {
-        margin: 0;
-        font-size: 1.15rem;
-        line-height: 2;
-        color: rgb(var(--gray));
-        max-width: 920px;
-      }
-
-      .hero-text + .hero-text,
-      .about-text + .about-text {
-        margin-top: 1.4rem;
-      }
-
-      .moments-subtitle {
-        margin-bottom: 1.4rem;
-      }
-
-      .about-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.6rem;
-        margin-top: 1.4rem;
-      }
-
-      .about-item {
-        background: rgba(250, 244, 248, 0.72);
-        border-radius: 1.2rem;
-        padding: 1.2rem 1.2rem 1.1rem;
-      }
-
-      .about-item-title {
-        margin: 0 0 0.6rem;
-        font-size: 1rem;
-        font-weight: 700;
-        color: rgb(var(--black));
-      }
-
-      .about-item-text {
-        margin: 0;
-        font-size: 0.98rem;
-        line-height: 1.8;
-        color: rgb(var(--gray));
-      }
-
-      .moments-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.2rem;
-      }
-
-      .moment-item {
-        overflow: hidden;
-        background: rgba(250, 244, 248, 0.72);
-        border-radius: 1.3rem;
-        transition: transform 0.22s ease, box-shadow 0.22s ease;
-      }
-
-      .moment-item:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
-      }
-
-      .moment-image {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-        display: block;
-      }
-
-      .moment-content {
-        padding: 1rem 1rem 1.1rem;
-      }
-
-      .moment-date {
-        display: inline-block;
-        margin-bottom: 0.45rem;
-        font-size: 0.85rem;
-        color: rgb(var(--gray));
-      }
-
-      .moment-title {
-        margin: 0 0 0.45rem;
-        font-size: 1rem;
-        font-weight: 700;
-        color: rgb(var(--black));
-      }
-
-      .moment-text {
-        margin: 0;
-        font-size: 0.95rem;
-        line-height: 1.8;
-        color: rgb(var(--gray));
-      }
-
-      .bottom-space {
-        height: 180px;
-      }
-
-      @media (max-width: 900px) {
-        main {
-          max-width: calc(100% - 1.25rem);
-          margin: 1.5rem auto 3rem;
-        }
-
-        .hero-card,
-        .about-card,
-        .moments-card {
-          padding: 1.6rem 1.4rem 1.8rem;
-          border-radius: 1.5rem;
-        }
-
-        .hero-corner {
-          position: static;
-          align-items: flex-start;
-          margin-bottom: 1rem;
-        }
-
-        .hero-title {
-          font-size: 2.2rem;
-          line-height: 1.2;
-          max-width: none;
-        }
-
-        .section-title {
-          font-size: 1.35rem;
-        }
-
-        .hero-text,
-        .about-text,
-        .moments-subtitle {
-          font-size: 1rem;
-          line-height: 1.9;
-        }
-
-        .about-grid {
-          grid-template-columns: 1fr;
-          gap: 1rem;
-        }
-
-        .moments-grid {
-          grid-template-columns: 1fr;
-          gap: 1rem;
-        }
-
-        .moment-image {
-          height: 200px;
-        }
-
-        .bottom-space {
-          height: 100px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <Header />
-
-    <main>
-      <section class="hero-card">
-        <div class="hero-corner">
-          <div class="hero-stars">✦ ✧ ✦</div>
-        </div>
-
-        <h1 class="hero-title">👩‍💻 Hi, this is Xinyuan’s blog</h1>
-
-        <p class="hero-text">Hi, I’m Xinyuan.</p>
-
-        <p class="hero-text">
-          A small, quiet space for notes and observations.
-        </p>
-
-        <p class="hero-text">
-          Here I document what I’m working on, what I’m learning, and how things
-          slowly take shape over time.
-        </p>
-
-        <p class="hero-text">
-          Topics include networking, Japanese, work logs, and daily reflections —
-          not as finished answers, but as things in progress.
-        </p>
-      </section>
-
-      <section class="about-card">
-        <h2 class="section-title">About Me</h2>
-
-        <p class="about-text">
-          I’m a network engineer based in Japan, and this blog is where I collect
-          small traces of work, study, language, and everyday life.
-        </p>
-
-        <p class="about-text">
-          I like writing about things while they are still unfolding — not only
-          the results, but also the confusion, the progress, and the process of
-          understanding them.
-        </p>
-
-        <div class="about-grid">
-          <div class="about-item">
-            <h3 class="about-item-title">💼 Work</h3>
-            <p class="about-item-text">
-              Networking, troubleshooting, project notes, and weekly work logs.
-            </p>
-          </div>
-
-          <div class="about-item">
-            <h3 class="about-item-title">📚 Learning</h3>
-            <p class="about-item-text">
-              Japanese study, technical growth, and things I want to understand
-              more deeply.
-            </p>
-          </div>
-
-          <div class="about-item">
-            <h3 class="about-item-title">✍️ Writing</h3>
-            <p class="about-item-text">
-              Personal reflections, small observations, and records of change over time.
-            </p>
-          </div>
-
-          <div class="about-item">
-            <h3 class="about-item-title">🌿 Life</h3>
-            <p class="about-item-text">
-              Living in Japan, ordinary moments, and the quiet parts of daily life.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="moments-card">
-        <h2 class="section-title">📷 Recent Moments</h2>
-        <p class="moments-subtitle">
-          Small traces of what I’ve been doing, learning, and noticing recently.
-        </p>
-
-        <div class="moments-grid">
-          {moments.map((moment) => (
-            <article class="moment-item">
-              <img
-                class="moment-image"
-                src={moment.image}
-                alt={moment.title}
-              />
-              <div class="moment-content">
-                <span class="moment-date">{moment.date}</span>
-                <h3 class="moment-title">{moment.title}</h3>
-                <p class="moment-text">{moment.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <div class="bottom-space"></div>
-    </main>
-
-    <Footer />
-  </body>
-</html>
+    .nav {
+      gap: 1.2rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+  }
+</style>
