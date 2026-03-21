@@ -36,9 +36,11 @@ const moments = [
         --card: rgba(255, 255, 255, 0.72);
         --card-soft: rgba(250, 243, 247, 0.88);
         --border: rgba(232, 206, 218, 0.7);
-        --text: #6e7899;
-        --heading: #1e2230;
-        --soft-heading: #b18495;
+        --text: #8c7881;
+        --heading: #7c626d;
+        --soft-heading: #b596a3;
+        --link: #b98ea0;
+        --link-hover: #c999ab;
         --shadow: 0 10px 30px rgba(214, 191, 202, 0.16);
       }
 
@@ -48,10 +50,7 @@ const moments = [
         padding: 0;
         background: linear-gradient(180deg, #fdf9fb 0%, #fbf5f8 100%);
         color: var(--text);
-        font-family:
-          "Times New Roman",
-          "Georgia",
-          serif;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .page-shell {
@@ -74,24 +73,26 @@ const moments = [
       }
 
       .hero-card {
-        padding: 3.5rem 2rem;
+        padding: 3.2rem 2rem 3rem;
         text-align: center;
         margin-top: 1.4rem;
       }
 
       .hero-title {
         margin: 0;
-        font-size: clamp(2.8rem, 6vw, 5rem);
+        font-size: clamp(2.3rem, 5vw, 4rem);
         font-weight: 600;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.14em;
         color: var(--soft-heading);
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .hero-subtitle {
-        margin-top: 1rem;
-        font-size: 1.02rem;
+        margin-top: 0.95rem;
+        font-size: 1rem;
         line-height: 1.9;
         color: var(--text);
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .about-card {
@@ -101,14 +102,11 @@ const moments = [
 
       .section-title {
         margin: 0 0 1.4rem;
-        font-size: clamp(2rem, 4.5vw, 3.4rem);
+        font-size: clamp(2rem, 4.5vw, 3rem);
         font-weight: 700;
-        letter-spacing: -0.03em;
+        letter-spacing: 0.01em;
         color: var(--heading);
-        font-family:
-          "Helvetica Neue",
-          Arial,
-          sans-serif;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .about-text {
@@ -116,10 +114,7 @@ const moments = [
         font-size: 1rem;
         line-height: 2;
         color: var(--text);
-        font-family:
-          "Helvetica Neue",
-          Arial,
-          sans-serif;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .about-text p {
@@ -133,21 +128,20 @@ const moments = [
       .about-link {
         display: inline-block;
         text-decoration: none;
-        color: #8c92b2;
+        color: var(--link);
         font-size: 0.94rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        border-bottom: 1px solid rgba(140, 146, 178, 0.4);
+        border-bottom: 1px solid rgba(185, 142, 160, 0.4);
         padding-bottom: 0.18rem;
-        transition: opacity 0.2s ease;
-        font-family:
-          "Helvetica Neue",
-          Arial,
-          sans-serif;
+        transition: color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .about-link:hover {
-        opacity: 0.7;
+        color: var(--link-hover);
+        border-bottom-color: rgba(201, 153, 171, 0.55);
+        opacity: 0.9;
       }
 
       .about-grid {
@@ -165,13 +159,11 @@ const moments = [
 
       .about-item h3 {
         margin: 0 0 0.7rem;
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 700;
         color: var(--heading);
-        font-family:
-          "Helvetica Neue",
-          Arial,
-          sans-serif;
+        font-family: "Times New Roman", Georgia, serif;
+        letter-spacing: 0.02em;
       }
 
       .about-item p {
@@ -179,10 +171,7 @@ const moments = [
         font-size: 0.96rem;
         line-height: 1.8;
         color: var(--text);
-        font-family:
-          "Helvetica Neue",
-          Arial,
-          sans-serif;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .moments-card {
@@ -192,10 +181,11 @@ const moments = [
 
       .moments-title {
         margin: 0 0 1.8rem;
-        font-size: 1.2rem;
-        letter-spacing: 0.2em;
+        font-size: 1.08rem;
+        letter-spacing: 0.18em;
         color: var(--soft-heading);
         font-weight: 600;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .moments-grid {
@@ -228,22 +218,25 @@ const moments = [
       .moment-content h3 {
         margin: 0 0 0.45rem;
         font-size: 1rem;
-        letter-spacing: 0.06em;
-        color: var(--soft-heading);
+        letter-spacing: 0.04em;
+        color: var(--heading);
         font-weight: 600;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .moment-date {
         font-size: 0.82rem;
-        color: #a29ab0;
+        color: #ab97a0;
         margin-bottom: 0.8rem;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       .moment-content p {
         margin: 0;
         font-size: 0.95rem;
         line-height: 1.7;
-        color: #6f626a;
+        color: #8c7881;
+        font-family: "Times New Roman", Georgia, serif;
       }
 
       @media (max-width: 1100px) {
@@ -274,6 +267,10 @@ const moments = [
 
         .about-grid {
           grid-template-columns: 1fr;
+        }
+
+        .hero-title {
+          font-size: clamp(2rem, 9vw, 3rem);
         }
       }
     </style>
