@@ -63,34 +63,6 @@ const moments = [
       .moments-card {
         margin-top: 1.6rem;
       }
-
-      .hero-corner {
-        position: absolute;
-        top: 1.8rem;
-        right: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 0.45rem;
-      }
-
-      .hero-stars {
-        font-size: 1.1rem;
-        letter-spacing: 0.18em;
-        color: #e7a9c4;
-        user-select: none;
-      }
-
-      .tokyo-time {
-        font-size: 0.92rem;
-        line-height: 1.6;
-        color: rgb(var(--gray));
-        background: rgba(250, 244, 248, 0.9);
-        padding: 0.45rem 0.8rem;
-        border-radius: 999px;
-        white-space: nowrap;
-      }
-
       .hero-title {
         margin: 0 0 1.2rem;
         font-size: 3.2rem;
@@ -220,12 +192,6 @@ const moments = [
           border-radius: 1.5rem;
         }
 
-        .hero-corner {
-          position: static;
-          align-items: flex-start;
-          margin-bottom: 1rem;
-        }
-
         .hero-title {
           font-size: 2.2rem;
           line-height: 1.2;
@@ -269,10 +235,6 @@ const moments = [
 
     <main>
       <section class="hero-card">
-        <div class="hero-corner">
-          <div class="hero-stars">✦ ✧ ✦</div>
-          <div class="tokyo-time" id="tokyo-time">东京时间：--</div>
-        </div>
 
         <h1 class="hero-title">👩‍💻 Hi, this is Xinyuan’s blog</h1>
 
@@ -367,45 +329,5 @@ const moments = [
     </main>
 
     <Footer />
-
-    <script>
-      function updateTokyoTime() {
-        const el = document.getElementById('tokyo-time');
-        if (!el) return;
-
-        const now = new Date();
-        const formatter = new Intl.DateTimeFormat('zh-CN', {
-          timeZone: 'Asia/Tokyo',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-        });
-
-        const formatted = formatter.format(now).replace(/\//g, '年').replace(',', '');
-        const parts = new Intl.DateTimeFormat('zh-CN', {
-          timeZone: 'Asia/Tokyo',
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-        }).formatToParts(now);
-
-        const year = parts.find((p) => p.type === 'year')?.value ?? '';
-        const month = parts.find((p) => p.type === 'month')?.value ?? '';
-        const day = parts.find((p) => p.type === 'day')?.value ?? '';
-        const hour = parts.find((p) => p.type === 'hour')?.value ?? '';
-        const minute = parts.find((p) => p.type === 'minute')?.value ?? '';
-
-        el.textContent = `东京时间：${year}年${month}月${day}日 ${hour}:${minute}`;
-      }
-
-      updateTokyoTime();
-      setInterval(updateTokyoTime, 60000);
-    </script>
   </body>
 </html>
