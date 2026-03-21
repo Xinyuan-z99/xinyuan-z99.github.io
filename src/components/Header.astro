@@ -68,24 +68,39 @@ const currentPath = Astro.url.pathname;
     justify-content: center;
     align-items: center;
     gap: 3rem;
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
   }
 
   .nav a {
-    color: rgb(var(--black));
+    position: relative;
     text-decoration: none;
-    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 1.18rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: #8f7480;
+    transition: color 0.25s ease, transform 0.2s ease, opacity 0.2s ease;
   }
 
   .nav a:hover {
-    opacity: 0.75;
+    color: #c493a7;
     transform: translateY(-1px);
+    opacity: 0.95;
   }
 
   .nav a.active {
     color: #d49ab6;
+  }
+
+  .nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -0.42rem;
+    transform: translateX(-50%);
+    width: 68%;
+    height: 1px;
+    background: rgba(212, 154, 182, 0.75);
+    border-radius: 999px;
   }
 
   .tokyo-time {
@@ -93,16 +108,18 @@ const currentPath = Astro.url.pathname;
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    font-size: 0.92rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    color: #b78ca4;
-    background: rgba(252, 243, 248, 0.95);
-    border: 1px solid rgba(231, 196, 214, 0.7);
-    padding: 0.56rem 0.95rem;
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: #b58ca2;
+    background: rgba(252, 243, 248, 0.88);
+    border: 1px solid rgba(231, 196, 214, 0.55);
+    padding: 0.54rem 0.92rem;
     border-radius: 999px;
     white-space: nowrap;
-    box-shadow: 0 6px 18px rgba(220, 188, 205, 0.14);
+    box-shadow: 0 6px 18px rgba(220, 188, 205, 0.1);
+    backdrop-filter: blur(6px);
   }
 
   @media (max-width: 900px) {
@@ -119,15 +136,18 @@ const currentPath = Astro.url.pathname;
 
     .nav {
       gap: 1.4rem;
-      font-size: 1.05rem;
-      letter-spacing: 0.08em;
+    }
+
+    .nav a {
+      font-size: 1rem;
+      letter-spacing: 0.14em;
     }
 
     .tokyo-time {
       position: static;
       transform: none;
-      font-size: 0.86rem;
-      padding: 0.45rem 0.8rem;
+      font-size: 0.84rem;
+      padding: 0.44rem 0.78rem;
     }
   }
 </style>
