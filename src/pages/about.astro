@@ -11,22 +11,27 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
     <BaseHead title={`About | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <style>
       :root {
-        --bg1: #fff8fb;
-        --bg2: #fdeff5;
-        --card: rgba(255, 255, 255, 0.74);
-        --border: rgba(255, 182, 193, 0.28);
-        --text: #5b4b52;
-        --title: #9f6f7d;
-        --shadow: 0 10px 30px rgba(222, 170, 190, 0.16);
+        --bg: #fcf7fa;
+        --card: rgba(255, 255, 255, 0.72);
+        --card-soft: rgba(250, 243, 247, 0.88);
+        --border: rgba(232, 206, 218, 0.7);
+        --text: #6e7899;
+        --heading: #1e2230;
+        --soft-heading: #8f7f8f;
+        --shadow: 0 10px 30px rgba(214, 191, 202, 0.16);
       }
 
+      html,
       body {
         margin: 0;
-        font-family: 'Times New Roman', serif;
+        padding: 0;
+        background: linear-gradient(180deg, #fdf9fb 0%, #fbf5f8 100%);
         color: var(--text);
-        background:
-          radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 35%),
-          linear-gradient(135deg, var(--bg1), var(--bg2));
+        font-family:
+          "Inter",
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
       }
 
       .page-shell {
@@ -34,44 +39,100 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
       }
 
       .main {
-        width: min(900px, 92%);
+        width: min(1200px, 92%);
         margin: 0 auto;
-        padding: 2rem 0 4rem;
+        padding: 1.2rem 0 4rem;
       }
 
       .about-card {
-        margin-top: 1.5rem;
+        margin-top: 1.4rem;
         background: var(--card);
-        backdrop-filter: blur(10px);
         border: 1px solid var(--border);
-        border-radius: 28px;
+        border-radius: 40px;
         box-shadow: var(--shadow);
-        padding: 3rem 2rem;
+        padding: 3rem 3.2rem;
       }
 
-      .page-title {
-        text-align: center;
-        margin: 0 0 2rem 0;
-        font-size: clamp(2rem, 4vw, 3.2rem);
+      .eyebrow {
+        margin: 0 0 0.5rem;
+        font-size: 0.88rem;
         letter-spacing: 0.18em;
-        color: var(--title);
+        text-transform: uppercase;
+        color: var(--soft-heading);
         font-weight: 600;
       }
 
-      .about-content {
-        max-width: 720px;
-        margin: 0 auto;
-        font-size: 1.04rem;
-        line-height: 2.05;
+      .page-title {
+        margin: 0 0 1.6rem;
+        font-size: clamp(2.3rem, 5vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        color: var(--heading);
+        font-weight: 700;
       }
 
-      .about-content p {
-        margin: 0 0 1.2rem 0;
+      .intro {
+        max-width: 920px;
+        font-size: 1.03rem;
+        line-height: 2;
+        color: var(--text);
       }
 
-      @media (max-width: 768px) {
+      .intro p {
+        margin: 0 0 1.25rem;
+      }
+
+      .section-divider {
+        height: 1px;
+        background: rgba(232, 206, 218, 0.8);
+        margin: 2rem 0;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.2rem;
+      }
+
+      .info-card {
+        background: var(--card-soft);
+        border-radius: 28px;
+        padding: 1.4rem 1.5rem;
+      }
+
+      .info-card h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.02rem;
+        color: var(--heading);
+        font-weight: 700;
+      }
+
+      .info-card p {
+        margin: 0;
+        font-size: 0.97rem;
+        line-height: 1.85;
+        color: var(--text);
+      }
+
+      .closing {
+        margin-top: 2rem;
+        font-size: 0.98rem;
+        line-height: 1.9;
+        color: var(--text);
+      }
+
+      @media (max-width: 900px) {
+        .main {
+          width: min(94%, 94%);
+        }
+
         .about-card {
-          padding: 2rem 1.3rem;
+          border-radius: 28px;
+          padding: 2rem 1.5rem;
+        }
+
+        .info-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -80,44 +141,81 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
   <body>
     <div class="page-shell">
       <Header />
+
       <main class="main">
         <section class="about-card">
-          <h1 class="page-title">ABOUT</h1>
-          <div class="about-content">
-            <p>Hi, I’m Xinyuan.</p>
+          <p class="eyebrow">About</p>
+          <h1 class="page-title">A Little More About Me</h1>
 
+          <div class="intro">
             <p>
-              I’m currently living in Tokyo and working in network engineering in Japan.
-              My daily life is closely connected to technology, problem-solving,
-              learning, and continuous improvement.
+              Hi, I’m Xinyuan.
             </p>
-
             <p>
-              I created this website as a personal space to document my journey —
-              not only in work and study, but also in life itself.
-              Here, I share technical notes, work logs, reflections, and small
-              everyday moments that I want to remember.
+              I’m currently living in Japan and working in network engineering.
+              My daily life is closely tied to technology, troubleshooting,
+              project work, learning, and the slow process of becoming better at what I do.
             </p>
-
             <p>
-              For me, writing is a way to organize thoughts, preserve feelings,
-              and look back on growth.
-              Sometimes this site is a notebook for learning.
-              Sometimes it is a quiet corner for recording life.
-              Sometimes it is simply a place to leave traces of who I am at this moment.
+              I made this website as a small place to keep traces of that journey.
+              Not only the polished parts, but also the unfinished ones —
+              the questions, the changes, the uncertainty, and the progress that
+              often feels too small to notice in the moment.
             </p>
-
             <p>
-              Beyond work, I also enjoy observing daily life, taking photos,
-              writing personal reflections, and collecting meaningful memories.
-              I hope this website can become a gentle archive of my time,
-              growth, and experiences.
+              I like recording things while they are still in motion.
+              Sometimes that means technical notes.
+              Sometimes it becomes a weekly reflection, a language-learning memo,
+              or a piece of writing about ordinary life in Japan.
             </p>
+          </div>
 
-            <p>Thank you for visiting.</p>
+          <div class="section-divider"></div>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <h2>💼 Work</h2>
+              <p>
+                I write about networking, troubleshooting, project progress,
+                and the practical side of learning through work.
+              </p>
+            </div>
+
+            <div class="info-card">
+              <h2>📚 Learning</h2>
+              <p>
+                I’m also interested in language study, technical improvement,
+                and documenting what I am still trying to understand.
+              </p>
+            </div>
+
+            <div class="info-card">
+              <h2>✍️ Writing</h2>
+              <p>
+                Writing helps me organize experience.
+                It gives shape to things that might otherwise disappear into busy days.
+              </p>
+            </div>
+
+            <div class="info-card">
+              <h2>🌿 Life</h2>
+              <p>
+                Beyond work, I want this site to hold everyday moments too —
+                small memories, thoughts, and the quiet texture of daily life.
+              </p>
+            </div>
+          </div>
+
+          <div class="closing">
+            <p>
+              This website is not meant to be perfect.
+              I hope it can simply become an honest archive of work, growth,
+              curiosity, and life as I am living it now.
+            </p>
           </div>
         </section>
       </main>
+
       <Footer />
     </div>
   </body>
