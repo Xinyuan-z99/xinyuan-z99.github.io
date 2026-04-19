@@ -1,5 +1,5 @@
 ---
-title: Work Log · 2026 Week 130
+title: Work Log · 2026 Week 13
 pubDate: "2026-04-12"
 description: "2026 年第13週目週報"
 category: "Work Log"
