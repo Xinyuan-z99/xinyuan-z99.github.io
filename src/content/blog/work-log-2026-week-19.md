@@ -1,6 +1,6 @@
 ---
 title: Work Log · 2026 Week 19
-pubDate: "2026-0-6"
+pubDate: "2026-06-06"
 description: "2026 年第19週目週報"
 category: "Work Log"
 tags: ["work", "weekly", "networking"]
