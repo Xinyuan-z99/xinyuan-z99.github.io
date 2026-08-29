@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { getCollection } from 'astro:content';
@@ -181,7 +182,7 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
       }
 
       .title {
-        margin: 0;
+        margin: 0 0 0.55rem;
         color: var(--heading);
         line-height: 1.45;
         font-size: 1.08rem;
@@ -192,6 +193,46 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
 
       ul li a:hover .title {
         color: var(--accent-deep);
+      }
+
+      .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem 0.65rem;
+        align-items: center;
+        margin-bottom: 0.55rem;
+        color: var(--soft-heading);
+        font-size: 0.86rem;
+        line-height: 1.5;
+      }
+
+      .post-category {
+        color: var(--accent-deep);
+        font-weight: 600;
+      }
+
+      .description {
+        margin: 0;
+        color: var(--text);
+        font-size: 0.95rem;
+        line-height: 1.75;
+      }
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 0.75rem;
+      }
+
+      .tag {
+        border: 1px solid rgba(201, 152, 171, 0.32);
+        border-radius: 999px;
+        padding: 0.18rem 0.56rem;
+        color: var(--accent-deep);
+        background: rgba(246, 233, 239, 0.52);
+        font-size: 0.78rem;
+        line-height: 1.4;
       }
 
       .hidden-category {
@@ -270,7 +311,18 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
                   groupedPosts[cat].map((post) => (
                     <li>
                       <a href={`/blog/${post.id}/`}>
+                        <div class="post-meta">
+                          <FormattedDate date={post.data.pubDate} />
+                          {post.data.category && <span>·</span>}
+                          {post.data.category && <span class="post-category">{post.data.category}</span>}
+                        </div>
                         <h4 class="title">{post.data.title}</h4>
+                        {post.data.description && <p class="description">{post.data.description}</p>}
+                        {post.data.tags && post.data.tags.length > 0 && (
+                          <div class="tag-list">
+                            {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+                          </div>
+                        )}
                       </a>
                     </li>
                   ))

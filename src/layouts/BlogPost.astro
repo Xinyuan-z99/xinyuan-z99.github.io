@@ -19,6 +19,8 @@ const {
   pubDate,
   updatedDate,
   heroImage,
+  category,
+  tags,
   prevPost,
   nextPost
 } = Astro.props;
@@ -69,8 +71,26 @@ const {
 
       .date {
         margin-bottom: 0.5em;
-        color: rgb(var(--gray));
+        color: #b596a3;
         font-size: 0.95rem;
+      }
+
+      .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.45rem;
+        margin: 0.8rem auto 1.1rem;
+      }
+
+      .post-meta span {
+        border: 1px solid rgba(201, 152, 171, 0.34);
+        border-radius: 999px;
+        padding: 0.2rem 0.62rem;
+        color: #b78497;
+        background: rgba(246, 233, 239, 0.52);
+        font-size: 0.82rem;
+        line-height: 1.45;
       }
 
       .last-updated-on {
@@ -82,8 +102,8 @@ const {
       .prose h3 {
         font-size: 1.4rem;
         font-weight: 700;
-        color: #5aa2e6;
-        border-left: 4px solid #5aa2e6;
+        color: #b78497;
+        border-left: 4px solid #c998ab;
         padding-left: 12px;
         margin-top: 2rem;
         margin-bottom: 0.9rem;
@@ -193,6 +213,12 @@ const {
             </div>
 
             <h1>{title}</h1>
+            {(category || (tags && tags.length > 0)) && (
+              <div class="post-meta">
+                {category && <span>{category}</span>}
+                {tags?.map((tag) => <span>#{tag}</span>)}
+              </div>
+            )}
             <hr />
           </div>
 
