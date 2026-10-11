@@ -20,6 +20,7 @@ const {
   updatedDate,
   heroImage,
   category,
+  series,
   tags,
   prevPost,
   nextPost
@@ -213,9 +214,10 @@ const {
             </div>
 
             <h1>{title}</h1>
-            {(category || (tags && tags.length > 0)) && (
+            {(category || series || (tags && tags.length > 0)) && (
               <div class="post-meta">
                 {category && <span>{category}</span>}
+                {series && <span>{series}</span>}
                 {tags?.map((tag) => <span>#{tag}</span>)}
               </div>
             )}

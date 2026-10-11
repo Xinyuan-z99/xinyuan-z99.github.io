@@ -20,6 +20,7 @@ const groupedPosts = posts.reduce((acc, post) => {
 }, {});
 
 const CATEGORY_ORDER = ['Network', 'Work Log', 'Life'];
+const NETWORK_SERIES_ORDER = ['Catalyst Center', 'General'];
 
 const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
   const ia = CATEGORY_ORDER.indexOf(a);
@@ -218,6 +219,28 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
         margin-top: 0.75rem;
       }
 
+      .series-block {
+        margin-top: 1rem;
+      }
+
+      .series-block + .series-block {
+        margin-top: 1.25rem;
+      }
+
+      .series-title {
+        margin: 0 0 0.75rem;
+        color: var(--accent-deep);
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        font-family: "Times New Roman", Georgia, serif;
+      }
+
+      .series-name {
+        color: var(--accent-deep);
+        font-weight: 600;
+      }
+
       .tag {
         border: 1px solid rgba(201, 152, 171, 0.32);
         border-radius: 999px;
@@ -299,27 +322,73 @@ const sortedCategories = Object.keys(groupedPosts).sort((a, b) => {
           sortedCategories.map((cat) => (
             <div class="category-block" data-category={cat}>
               <h2 class="category-title">📂 {cat}</h2>
-              <ul>
-                {
-                  groupedPosts[cat].map((post) => (
-                    <li>
-                      <a href={`/blog/${post.id}/`}>
-                        <div class="post-meta">
-                          <FormattedDate date={post.data.pubDate} />
-                          {post.data.category && <span>·</span>}
-                          {post.data.category && <span class="post-category">{post.data.category}</span>}
-                        </div>
-                        <h4 class="title">{post.data.title}</h4>
-                        {post.data.tags && post.data.tags.length > 0 && (
-                          <div class="tag-list">
-                            {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
-                          </div>
-                        )}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
+              {
+                cat === 'Network' ? (
+                  Object.entries(
+                    groupedPosts[cat].reduce((seriesAcc, post) => {
+                      const series = post.data.series || 'General';
+                      if (!seriesAcc[series]) seriesAcc[series] = [];
+                      seriesAcc[series].push(post);
+                      return seriesAcc;
+                    }, {})
+                  )
+                    .sort(([a], [b]) => {
+                      const ia = NETWORK_SERIES_ORDER.indexOf(a);
+                      const ib = NETWORK_SERIES_ORDER.indexOf(b);
+                      const ra = ia === -1 ? 999 : ia;
+                      const rb = ib === -1 ? 999 : ib;
+                      return ra - rb || a.localeCompare(b);
+                    })
+                    .map(([series, seriesPosts]) => (
+                      <div class="series-block">
+                        <h3 class="series-title">◇ {series}</h3>
+                        <ul>
+                          {seriesPosts.map((post) => (
+                            <li>
+                              <a href={`/blog/${post.id}/`}>
+                                <div class="post-meta">
+                                  <FormattedDate date={post.data.pubDate} />
+                                  {post.data.category && <span>·</span>}
+                                  {post.data.category && <span class="post-category">{post.data.category}</span>}
+                                  {post.data.series && <span>·</span>}
+                                  {post.data.series && <span class="series-name">{post.data.series}</span>}
+                                </div>
+                                <h4 class="title">{post.data.title}</h4>
+                                {post.data.tags && post.data.tags.length > 0 && (
+                                  <div class="tag-list">
+                                    {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+                                  </div>
+                                )}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))
+                ) : (
+                  <ul>
+                    {
+                      groupedPosts[cat].map((post) => (
+                        <li>
+                          <a href={`/blog/${post.id}/`}>
+                            <div class="post-meta">
+                              <FormattedDate date={post.data.pubDate} />
+                              {post.data.category && <span>·</span>}
+                              {post.data.category && <span class="post-category">{post.data.category}</span>}
+                            </div>
+                            <h4 class="title">{post.data.title}</h4>
+                            {post.data.tags && post.data.tags.length > 0 && (
+                              <div class="tag-list">
+                                {post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}
+                              </div>
+                            )}
+                          </a>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                )
+              }
             </div>
           ))
         }
