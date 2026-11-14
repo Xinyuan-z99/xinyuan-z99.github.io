@@ -6,7 +6,6 @@ category: "Work Log"
 tags: ["work", "weekly", "networking"]
 ---
 
-### 一つの出来事を振り返
  ## 状況
  - セキュリティインシデントの伴い、既存の無線LANのPWを推測されにくいものへ変更する必要があった。
 
