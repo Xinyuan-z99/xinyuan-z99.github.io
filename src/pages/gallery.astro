@@ -11,6 +11,18 @@ const photos = [
     date: '2026.04',
   },
   {
+    image: '/images/gallery/mountain-04.webp',
+    title: 'Mountain',
+    date: '2026.11',
+    alt: 'A mountain view beneath a clear blue sky',
+  },
+  {
+    image: '/images/gallery/mountain-05.webp',
+    title: 'Mountain',
+    date: '2026.11',
+    alt: 'A rocky mountain trail through autumn trees',
+  },
+  {
     image: '/images/gallery/mountain-02.JPG',
     title: 'Forest',
     date: '2026.04',
@@ -44,7 +56,7 @@ const photos = [
       <section class="photo-grid">
         {photos.map((photo) => (
           <article class="photo-card">
-            <img src={photo.image} alt={photo.title} />
+            <img src={photo.image} alt={photo.alt ?? photo.title} />
             <div class="photo-info">
               <h2>{photo.title}</h2>
               <p>{photo.date}</p>
